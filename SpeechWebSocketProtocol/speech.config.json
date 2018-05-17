@@ -1,0 +1,17 @@
+﻿{
+  "context": {
+    "system": {
+      "version": "2.0.12341"
+    },
+    "os": {
+      "platform": "Linux",
+      "name": "Debian",
+      "version": "2.14324324"
+    },
+    "device": {
+      "manufacturer": "Contoso",
+      "model": "Fabrikan",
+      "version": "7.341"
+    }
+  }
+}
