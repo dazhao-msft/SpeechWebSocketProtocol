@@ -4,32 +4,25 @@ using System.Text;
 
 namespace SpeechWebSocketProtocol
 {
+    //
+    // Speech Service WebSocket protocol
+    // https://docs.microsoft.com/en-us/azure/cognitive-services/speech/api-reference-rest/websocketprotocol
+    //
+
     public abstract class Message
     {
         public IDictionary<string, string> Headers { get; } = new Dictionary<string, string>();
 
         public string Path
         {
-            get
-            {
-                return Headers["Path"];
-            }
-            set
-            {
-                Headers["Path"] = value;
-            }
+            get => Headers["Path"];
+            set => Headers["Path"] = value;
         }
 
         public Guid RequestId
         {
-            get
-            {
-                return Guid.Parse(Headers["X-RequestId"]);
-            }
-            set
-            {
-                Headers["X-RequestId"] = value.ToString("N");
-            }
+            get => Guid.Parse(Headers["X-RequestId"]);
+            set => Headers["X-RequestId"] = value.ToString("N");
         }
     }
 
@@ -62,6 +55,10 @@ namespace SpeechWebSocketProtocol
 
         public override TextMessage Deserialize(ReadOnlySpan<byte> source)
         {
+            //
+            // TODO: Provide more efficient implementation.
+            //
+
             var message = new TextMessage();
 
             string[] values = s_encoding.GetString(source).Split(Delimiter + Delimiter, StringSplitOptions.RemoveEmptyEntries);
@@ -80,6 +77,10 @@ namespace SpeechWebSocketProtocol
 
         public override int Serialize(TextMessage message, Span<byte> destination)
         {
+            //
+            // TODO: Calculate total byte count and check the length of destination first.
+            //
+
             int index = 0;
 
             foreach (var header in message.Headers)
@@ -104,6 +105,10 @@ namespace SpeechWebSocketProtocol
 
         public override BinaryMessage Deserialize(ReadOnlySpan<byte> source)
         {
+            //
+            // TODO: Provide more efficient implementation.
+            //
+
             var message = new BinaryMessage();
 
             int headersLength = source[0] << 8 | source[1];
@@ -124,6 +129,10 @@ namespace SpeechWebSocketProtocol
 
         public override int Serialize(BinaryMessage message, Span<byte> destination)
         {
+            //
+            // TODO: Calculate total byte count and check the length of destination first.
+            //
+
             int index = 2;
 
             foreach (var header in message.Headers)

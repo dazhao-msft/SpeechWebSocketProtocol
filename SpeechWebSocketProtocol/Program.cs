@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace SpeechWebSocketProtocol
 {
-    class Program
+    public static class Program
     {
         private static readonly TextMessageSerializer s_textMessageSerializer = new TextMessageSerializer();
         private static readonly BinaryMessageSerializer s_binaryMessageSerializer = new BinaryMessageSerializer();
 
-        static async Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             string authorizationToken = await GetAuthorizationTokenAsync();
 
@@ -33,7 +33,7 @@ namespace SpeechWebSocketProtocol
             }
         }
 
-        static async Task<string> GetAuthorizationTokenAsync()
+        private static async Task<string> GetAuthorizationTokenAsync()
         {
             using (var client = new HttpClient())
             {
@@ -51,7 +51,7 @@ namespace SpeechWebSocketProtocol
             }
         }
 
-        static async Task SendAsync(WebSocket webSocket, CancellationToken cancellationToken)
+        private static async Task SendAsync(WebSocket webSocket, CancellationToken cancellationToken)
         {
             Memory<byte> buffer = new byte[1024 * 1024];
 
@@ -99,7 +99,7 @@ namespace SpeechWebSocketProtocol
             }
         }
 
-        static async Task ReceiveAsync(WebSocket webSocket, CancellationToken cancellationToken)
+        private static async Task ReceiveAsync(WebSocket webSocket, CancellationToken cancellationToken)
         {
             const int ReceiveBufferSize = 4 * 1024;
 
